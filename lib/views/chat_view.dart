@@ -1,3 +1,4 @@
+import 'package:chatapp/widgets/chat_bubble.dart';
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatelessWidget {
@@ -24,6 +25,41 @@ class ChatPage extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemBuilder: (context, index) {
+                return const ChatBubble();
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: 'Send Message',
+                suffixIcon: const Icon(
+                  Icons.send,
+                  color: Color(0xff2b475e),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: const BorderSide(
+                    color: Color(0xff2b475e),
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: const BorderSide(
+                    color: Color(0xff2b475e),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
