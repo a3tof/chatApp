@@ -1,4 +1,5 @@
 import 'package:chatapp/firebase_options.dart';
+import 'package:chatapp/views/chat_view.dart';
 import 'package:chatapp/views/login_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +17,9 @@ class ChatApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: LoginPage(),
+    return MaterialApp(
+      routes: {ChatPage.id: (context) => const ChatPage()},
+      home: const LoginPage(),
       debugShowCheckedModeBanner: false,
     );
   }
