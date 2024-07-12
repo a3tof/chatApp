@@ -1,10 +1,12 @@
 import 'package:chatapp/widgets/custom_button.dart';
 import 'package:chatapp/widgets/custom_text_filed.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class RegisterView extends StatelessWidget {
-  const RegisterView({super.key});
-
+  RegisterView({super.key});
+  String? email;
+  String? password;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,18 +53,30 @@ class RegisterView extends StatelessWidget {
               height: 16,
             ),
             CustomTextFiled(
+              onChanged: (data) {
+                email = data;
+              },
               hintText: 'Email',
             ),
             const SizedBox(
               height: 16,
             ),
             CustomTextFiled(
+              onChanged: (data) {
+                password = data;
+              },
               hintText: 'Password',
             ),
             const SizedBox(
               height: 16,
             ),
             CustomButton(
+              onTap: () async {
+                UserCredential user = await FirebaseAuth.instance
+                    .createUserWithEmailAndPassword(
+                        email: email!, password: password!);
+                print(user.user!.displayName);
+              },
               title: 'SIGN UP',
             ),
             const SizedBox(
