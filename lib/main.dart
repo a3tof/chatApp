@@ -18,7 +18,7 @@ class ChatApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      routes: {ChatPage.id: (context) => const ChatPage()},
+      routes: {ChatPage.id: (context) => ChatPage()},
       home: const LoginPage(),
       debugShowCheckedModeBanner: false,
     );
