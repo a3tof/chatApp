@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class CustomFormTextFiled extends StatelessWidget {
-  CustomFormTextFiled({super.key, this.hintText, this.onChanged});
+  CustomFormTextFiled(
+      {super.key, this.hintText, this.onChanged, this.obscureText = false});
   String? hintText;
+  bool? obscureText;
   Function(String)? onChanged;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      obscureText: obscureText!,
       validator: (data) {
         if (data!.isEmpty) {
           return 'field is required';

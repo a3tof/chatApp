@@ -82,6 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 16,
                 ),
                 CustomFormTextFiled(
+                  obscureText: true,
                   onChanged: (data) {
                     password = data;
                   },
@@ -98,7 +99,8 @@ class _LoginPageState extends State<LoginPage> {
                       try {
                         await LoginUser();
                         // ignore: use_build_context_synchronously
-                        Navigator.pushNamed(context, ChatPage.id);
+                        Navigator.pushNamed(context, ChatPage.id,
+                            arguments: email);
                       } on FirebaseAuthException catch (ex) {
                         if (ex.code == 'user-not-found') {
                           // ignore: use_build_context_synchronously

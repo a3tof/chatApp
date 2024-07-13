@@ -82,6 +82,7 @@ class _RegisterViewState extends State<RegisterView> {
                   height: 16,
                 ),
                 CustomFormTextFiled(
+                  obscureText: true,
                   onChanged: (data) {
                     password = data;
                   },

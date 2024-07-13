@@ -6,13 +6,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ChatPage extends StatelessWidget {
   ChatPage({super.key});
   static String id = 'ChatPage';
+  final controllerr = ScrollController();
   CollectionReference message =
       FirebaseFirestore.instance.collection('message');
   TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    var email = ModalRoute.of(context)!.settings.arguments;
     return StreamBuilder<QuerySnapshot>(
-      stream: message.orderBy('createdAt').snapshots(),
+      stream: message.orderBy('createdAt', descending: true).snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           List<Message> messagesList = [];
@@ -43,11 +45,15 @@ class ChatPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: ListView.builder(
+                    reverse: true,
+                    controller: controllerr,
                     itemCount: messagesList.length,
                     itemBuilder: (context, index) {
-                      return ChatBubble(
-                        message: messagesList[index],
-                      );
+                      return messagesList[index].id == email
+                          ? ChatBubble(
+                              message: messagesList[index],
+                            )
+                          : ChatBubbleForFriend(message: messagesList[index]);
                     },
                   ),
                 ),
@@ -59,8 +65,14 @@ class ChatPage extends StatelessWidget {
                       message.add({
                         'messagee': data,
                         'createdAt': DateTime.now(),
+                        'id': email,
                       });
                       controller.clear();
+                      controllerr.animateTo(
+                        controllerr.position.maxScrollExtent,
+                        curve: Curves.easeIn,
+                        duration: const Duration(microseconds: 500),
+                      );
                     },
                     decoration: InputDecoration(
                       hintText: 'Send Message',
@@ -87,7 +99,12 @@ class ChatPage extends StatelessWidget {
             ),
           );
         } else {
-          return const Text('lodaing...');
+          return const Center(
+            child: Text(
+              'lodaing...',
+              style: TextStyle(color: Colors.white),
+            ),
+          );
         }
       },
     );
