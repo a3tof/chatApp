@@ -95,9 +95,26 @@ class ChatPage extends StatelessWidget {
                     },
                     decoration: InputDecoration(
                       hintText: 'Send Message',
-                      suffixIcon: const Icon(
-                        Icons.send,
-                        color: Color(0xff2b475e),
+                      suffixIcon: IconButton(
+                        icon: const Icon(
+                          Icons.send,
+                          color: Color(0xff2b475e),
+                        ),
+                        onPressed: () {
+                          if (controller.text.isNotEmpty) {
+                            messageCollection.add({
+                              'messagee': controller.text,
+                              'createdAt': DateTime.now(),
+                              'id': email,
+                            });
+                            controller.clear();
+                            controllerr.animateTo(
+                              controllerr.position.maxScrollExtent,
+                              curve: Curves.easeIn,
+                              duration: const Duration(milliseconds: 500),
+                            );
+                          }
+                        },
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16),
