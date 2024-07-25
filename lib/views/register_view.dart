@@ -99,7 +99,7 @@ class _RegisterViewState extends State<RegisterView> {
                       try {
                         await RegisterUser();
                         // ignore: use_build_context_synchronously
-                        Navigator.pushNamed(context, ChatPage.id);
+                        Navigator.pushNamed(context, chatPage.id);
                       } on FirebaseAuthException catch (ex) {
                         if (ex.code == 'weak-password') {
                           // ignore: use_build_context_synchronously
