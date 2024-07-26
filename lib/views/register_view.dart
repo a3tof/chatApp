@@ -1,6 +1,6 @@
 import 'package:chatapp/helper/show_snack_bar.dart';
+import 'package:chatapp/views/blocs/auth_bloc/auth_bloc.dart';
 import 'package:chatapp/views/chat_view.dart';
-import 'package:chatapp/views/cubits/auth_cubit/cubit/auth_cubit.dart';
 import 'package:chatapp/widgets/custom_button.dart';
 import 'package:chatapp/widgets/custom_text_filed.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,7 +22,7 @@ class RegisterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthCubit, AuthState>(
+    return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is RegisterLoading) {
           isLoading = true;
@@ -109,8 +109,8 @@ class RegisterView extends StatelessWidget {
                     CustomButton(
                       onTap: () async {
                         if (formkey.currentState!.validate()) {
-                          BlocProvider.of<AuthCubit>(context)
-                              .RegisterUser(email: email!, password: password!);
+                          BlocProvider.of<AuthBloc>(context).add(RegisterEvent(
+                              email: email!, password: password!));
                         }
                       },
                       title: 'SIGN UP',
