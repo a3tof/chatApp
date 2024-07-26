@@ -1,6 +1,7 @@
 import 'package:chatapp/firebase_options.dart';
 import 'package:chatapp/views/chat_view.dart';
 import 'package:chatapp/views/cubits/login_cubit/login_cubit.dart';
+import 'package:chatapp/views/cubits/login_cubit/register_cubit/cubit/register_cubit.dart';
 import 'package:chatapp/views/login_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +20,15 @@ class ChatApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => LoginCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<LoginCubit>(
+          create: (context) => LoginCubit(),
+        ),
+        BlocProvider<RegisterCubit>(
+          create: (context) => RegisterCubit(),
+        ),
+      ],
       child: MaterialApp(
         routes: {chatPage.id: (context) => chatPage()},
         home: LoginPage(),

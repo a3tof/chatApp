@@ -21,7 +21,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LoginCubit, LoginState>(
+    return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is LoginLoading) {
           isLoading = true;
@@ -37,122 +37,120 @@ class LoginPage extends StatelessWidget {
           isLoading = false;
         }
       },
-      builder: (context, state) {
-        return ModalProgressHUD(
-          color: Colors.white,
-          inAsyncCall: isLoading,
-          child: Scaffold(
-            backgroundColor: const Color(0xff2b475e),
-            body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Form(
-                key: formkey,
-                child: ListView(
-                  children: [
-                    const SizedBox(
-                      height: 75,
-                    ),
-                    Image.asset(
-                      'assets/images/scholar.png',
-                      height: 100,
-                    ),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'FriendHub Chat',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 32,
-                            fontFamily: 'pacifico',
-                          ),
+      child: ModalProgressHUD(
+        color: Colors.white,
+        inAsyncCall: isLoading,
+        child: Scaffold(
+          backgroundColor: const Color(0xff2b475e),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Form(
+              key: formkey,
+              child: ListView(
+                children: [
+                  const SizedBox(
+                    height: 75,
+                  ),
+                  Image.asset(
+                    'assets/images/scholar.png',
+                    height: 100,
+                  ),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'FriendHub Chat',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 32,
+                          fontFamily: 'pacifico',
                         ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 75,
-                    ),
-                    const Row(
-                      children: [
-                        Text(
-                          'LOGIN',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                          ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 75,
+                  ),
+                  const Row(
+                    children: [
+                      Text(
+                        'LOGIN',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
                         ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    CustomFormTextFiled(
-                      onChanged: (data) {
-                        email = data;
-                      },
-                      hintText: 'Email',
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    CustomFormTextFiled(
-                      obscureText: true,
-                      onChanged: (data) {
-                        password = data;
-                      },
-                      hintText: 'Password',
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    CustomButton(
-                      onTap: () async {
-                        if (formkey.currentState!.validate()) {
-                          BlocProvider.of<LoginCubit>(context)
-                              .loginUser(email: email!, password: password!);
-                        } else {}
-                      },
-                      title: 'SIGN IN',
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'Don\'t have an account?',
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  CustomFormTextFiled(
+                    onChanged: (data) {
+                      email = data;
+                    },
+                    hintText: 'Email',
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  CustomFormTextFiled(
+                    obscureText: true,
+                    onChanged: (data) {
+                      password = data;
+                    },
+                    hintText: 'Password',
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  CustomButton(
+                    onTap: () async {
+                      if (formkey.currentState!.validate()) {
+                        BlocProvider.of<LoginCubit>(context)
+                            .loginUser(email: email!, password: password!);
+                      } else {}
+                    },
+                    title: 'SIGN IN',
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Don\'t have an account?',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) {
+                              return RegisterView();
+                            }),
+                          );
+                        },
+                        child: const Text(
+                          ' Register Now',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Color(0xffc7ede6),
                             fontSize: 16,
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) {
-                                return const RegisterView();
-                              }),
-                            );
-                          },
-                          child: const Text(
-                            ' Register Now',
-                            style: TextStyle(
-                              color: Color(0xffc7ede6),
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }
