@@ -8,6 +8,6 @@ class Message {
 
   factory Message.fromJson(QueryDocumentSnapshot doc) {
     var data = doc.data() as Map<String, dynamic>;
-    return Message(data['messagee'], data['id']);
+    return Message(data['message'], data['id'] ?? '');
   }
 }
