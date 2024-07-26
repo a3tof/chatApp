@@ -1,4 +1,5 @@
 import 'package:chatapp/firebase_options.dart';
+import 'package:chatapp/simple_bloc_observer.dart';
 import 'package:chatapp/views/blocs/auth_bloc/auth_bloc.dart';
 import 'package:chatapp/views/chat_view.dart';
 
@@ -13,7 +14,14 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const ChatApp());
+
+  // ignore: deprecated_member_use
+  BlocOverrides.runZoned(
+    () {
+      runApp(const ChatApp());
+    },
+    blocObserver: SimpleBlocObserver(),
+  );
 }
 
 class ChatApp extends StatelessWidget {
